@@ -1,0 +1,29 @@
+<p style="color: green"><%= notice %></p>
+
+<div id="<%= dom_id @brewery %>">
+  <h2>Name: <%= @brewery.name %></h2>
+
+  <p>
+    <strong>Year:</strong>
+    <i><%= @brewery.year %></i>
+  </p>
+
+  <p>
+    <strong>Beer count:</strong>
+    <%= @brewery.beers.count %>
+  </p>
+
+  <strong>Beer list:</strong>
+  <ul>
+    <% @brewery.beers.each do |beer| %>
+      <li><%= link_to beer.name, beer %></li>
+    <% end %>
+  </ul>
+</div>
+
+<div>
+  <%= link_to "Edit this brewery", edit_brewery_path(@brewery) %> |
+  <%= link_to "Back to breweries", breweries_path %>
+
+  <%= button_to "Destroy this brewery", @brewery, method: :delete %>
+</div>
