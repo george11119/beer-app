@@ -1,0 +1,32 @@
+<p style="color: green"><%= notice %></p>
+
+<h2>Username:</h2>
+<%= @user.username %>
+<p><%= @user.average_rating %></p>
+
+<h2>Ratings:</h2>
+<% @user.ratings.each do |rating| %>
+  <li>
+    <%= rating.beer %>
+    <%= rating.score %>
+    <%= link_to "Delete", rating_path(rating.id), data: {
+      "turbo_method": :delete
+    } %>
+  </li>
+<% end %>
+
+<h2>Member of:</h2>
+<ul>
+  <% @user.beer_clubs.each do |beer_club| %>
+    <li><%= link_to beer_club.name, beer_club_path(beer_club.id) %></li>
+  <% end %>
+</ul>
+<br>
+
+<div>
+  <%= link_to "Back to users", users_path %>
+  <% if current_user == @user %>
+    <%= link_to "Edit this user", edit_user_path(@user) %> |
+    <%= button_to "Destroy this user", @user, method: :delete %>
+  <% end %>
+</div>

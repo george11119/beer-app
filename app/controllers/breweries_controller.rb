@@ -71,7 +71,8 @@ class BreweriesController < ApplicationController
   def authenticate
     admin_accounts = { "admin" => "1234", "hello" => "world" }
     authenticate_or_request_with_http_basic do |username, password|
-      raise "wrong username or password" unless admin_accounts[username] === password
+      raise "wrong username or password" unless admin_accounts[username] == password
+
       return true
     end
   end

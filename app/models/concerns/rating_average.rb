@@ -2,14 +2,9 @@ module RatingAverage
   extend ActiveSupport::Concern
 
   def average_rating
-    ratings = self.ratings
-    num_ratings = ratings.count
-
-    if num_ratings == 0
-      return "no ratings yet"
-    end
+    return "no ratings yet" if ratings.empty?
 
     average_rating = ratings.average(:score)
-    "#{self.name} has #{num_ratings} #{"rating".pluralize(num_ratings)} with an average of #{average_rating}"
+    "has #{ratings.count} #{'rating'.pluralize(ratings.count)} with an average of #{average_rating}"
   end
 end

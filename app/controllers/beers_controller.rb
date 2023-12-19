@@ -24,25 +24,31 @@ class BeersController < ApplicationController
 
   # POST /beers or /beers.json
   def create
-    Beer.create(params.require(:beer).permit(:name, :style, :brewery_id))
-    redirect_to beers_url
+    @beer = Beer.new params.require(:beer).permit(:name, :style, :brewery_id)
 
-    # respond_to do |format|
-    #   if @beer.save
-    #     format.html { redirect_to beer_url(@beer), notice: "Beer was successfully created." }
-    #     format.json { render :show, status: :created, location: @beer }
-    #   else
-    #     format.html { render :new, status: :unprocessable_entity }
-    #     format.json { render json: @beer.errors, status: :unprocessable_entity }
-    #   end
-    # end
+    respond_to do |format|
+      if @beer.save
+        format.html {
+          redirect_to beer_url(@beer), notice: "Beer was successfully created."
+        }
+        format.json { render :show, status: :created, location: @beer }
+      else
+        @breweries = Brewery.all
+        @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter",
+                   "Low alcohol"]
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @beer.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # PATCH/PUT /beers/1 or /beers/1.json
   def update
     respond_to do |format|
       if @beer.update(beer_params)
-        format.html { redirect_to beer_url(@beer), notice: "Beer was successfully updated." }
+        format.html {
+          redirect_to beer_url(@beer), notice: "Beer was successfully updated."
+        }
         format.json { render :show, status: :ok, location: @beer }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,7 +62,9 @@ class BeersController < ApplicationController
     @beer.destroy
 
     respond_to do |format|
-      format.html { redirect_to beers_url, notice: "Beer was successfully destroyed." }
+      format.html {
+        redirect_to beers_url, notice: "Beer was successfully destroyed."
+      }
       format.json { head :no_content }
     end
   end
