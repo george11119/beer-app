@@ -28,16 +28,16 @@ class BeerClubsController < ApplicationController
 
     respond_to do |format|
       if @beer_club.save
-        format.html {
+        format.html do
           redirect_to beer_club_url(@beer_club),
                       notice: "Beer club was successfully created."
-        }
+        end
         format.json { render :show, status: :created, location: @beer_club }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json {
+        format.json do
           render json: @beer_club.errors, status: :unprocessable_entity
-        }
+        end
       end
     end
   end
@@ -46,16 +46,16 @@ class BeerClubsController < ApplicationController
   def update
     respond_to do |format|
       if @beer_club.update(beer_club_params)
-        format.html {
+        format.html do
           redirect_to beer_club_url(@beer_club),
                       notice: "Beer club was successfully updated."
-        }
+        end
         format.json { render :show, status: :ok, location: @beer_club }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json {
+        format.json do
           render json: @beer_club.errors, status: :unprocessable_entity
-        }
+        end
       end
     end
   end
@@ -65,10 +65,10 @@ class BeerClubsController < ApplicationController
     @beer_club.destroy
 
     respond_to do |format|
-      format.html {
+      format.html do
         redirect_to beer_clubs_url,
                     notice: "Beer club was successfully destroyed."
-      }
+      end
       format.json { head :no_content }
     end
   end

@@ -14,10 +14,10 @@ class MembershipsController < ApplicationController
   # GET /memberships/new
   def new
     # idk how this works dont ask
-    @beer_clubs = BeerClub
-                  .all
-                  .where
-                  .not(memberships: Membership.where(user_id: current_user.id))
+    @beer_clubs =
+      BeerClub.all.where.not(
+        memberships: Membership.where(user_id: current_user.id),
+      )
     @membership = Membership.new
   end
 
@@ -28,23 +28,23 @@ class MembershipsController < ApplicationController
 
   # POST /memberships or /memberships.json
   def create
-    @membership = Membership.new(params.require(:membership)
-                                       .permit(:beer_club_id))
+    @membership =
+      Membership.new(params.require(:membership).permit(:beer_club_id))
     @membership.user = current_user
 
     respond_to do |format|
       if @membership.save
-        format.html {
+        format.html do
           redirect_to user_path(current_user),
                       notice: "successfully joined club"
-        }
+        end
         format.json { render :show, status: :created, location: @membership }
       else
         @beer_clubs = BeerClub.all
         format.html { render :new, status: :unprocessable_entity }
-        format.json {
+        format.json do
           render json: @membership.errors, status: :unprocessable_entity
-        }
+        end
       end
     end
   end
@@ -53,16 +53,16 @@ class MembershipsController < ApplicationController
   def update
     respond_to do |format|
       if @membership.update(membership_params)
-        format.html {
+        format.html do
           redirect_to membership_url(@membership),
                       notice: "Membership was successfully updated."
-        }
+        end
         format.json { render :show, status: :ok, location: @membership }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json {
+        format.json do
           render json: @membership.errors, status: :unprocessable_entity
-        }
+        end
       end
     end
   end
@@ -72,10 +72,10 @@ class MembershipsController < ApplicationController
     @membership.destroy
 
     respond_to do |format|
-      format.html {
+      format.html do
         redirect_to memberships_url,
                     notice: "Membership was successfully destroyed."
-      }
+      end
       format.json { head :no_content }
     end
   end
