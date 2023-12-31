@@ -1,7 +1,10 @@
 <%= form_with(model: beer_club) do |form| %>
   <% if beer_club.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(beer_club.errors.count, "error") %> prohibited this beer_club from being saved:</h2>
+      <h2>
+        <%= pluralize(beer_club.errors.count, "error") %> prohibited this
+        beer_club from being saved:
+      </h2>
 
       <ul>
         <% beer_club.errors.each do |error| %>
