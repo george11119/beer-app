@@ -2,7 +2,10 @@
 
 <h2>Username:</h2>
 <%= @user.username %>
-<p><%= @user.average_rating %></p>
+<p>You have an average rating of: <%= @user.average_rating %></p>
+<p>Your favorite beer is: <%= @user.favorite_beer %></p>
+<p>Your favorite style of beer is: <%= @user.favorite_style %></p>
+<p>Your favorite brewery is: <%= @user.favorite_brewery %></p>
 
 <h2>Ratings:</h2>
 <% @user.ratings.each do |rating| %>

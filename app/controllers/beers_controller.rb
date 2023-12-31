@@ -1,5 +1,7 @@
 class BeersController < ApplicationController
   before_action :set_beer, only: %i[show edit update destroy]
+  before_action :set_breweries_and_styles, only: %i[edit new create]
+  before_action :ensure_that_signed_in, except: %i[index show]
 
   # GET /beers or /beers.json
   def index
@@ -12,14 +14,10 @@ class BeersController < ApplicationController
   # GET /beers/new
   def new
     @beer = Beer.new
-    @breweries = Brewery.all
-    @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter", "Low alcohol"]
   end
 
   # GET /beers/1/edit
   def edit
-    @breweries = Brewery.all
-    @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter", "Low alcohol"]
   end
 
   # POST /beers or /beers.json
@@ -33,9 +31,6 @@ class BeersController < ApplicationController
         }
         format.json { render :show, status: :created, location: @beer }
       else
-        @breweries = Brewery.all
-        @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter",
-                   "Low alcohol"]
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @beer.errors, status: :unprocessable_entity }
       end
@@ -74,6 +69,12 @@ class BeersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_beer
     @beer = Beer.find(params[:id])
+  end
+
+  def set_breweries_and_styles
+    @breweries = Brewery.all
+    @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter",
+               "Low alcohol"]
   end
 
   # Only allow a list of trusted parameters through.

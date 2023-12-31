@@ -1,4 +1,5 @@
 class RatingsController < ApplicationController
+  before_action :ensure_that_signed_in, except: %i[index]
   def index
     @ratings = Rating.all
   end
