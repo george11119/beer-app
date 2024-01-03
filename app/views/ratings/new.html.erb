@@ -18,7 +18,13 @@
 
   <div>
     <%=
-      f.select :beer_id, options_from_collection_for_select(@beers, :id, :to_s)
+      f.select :beer_id,
+               options_from_collection_for_select(
+                 @beers,
+                 :id,
+                 :to_s,
+                 selected: @rating.beer_id,
+               )
     %>
     <%= f.label "#{:score}:", style: "display: block" %>
     <%= f.number_field :score %>

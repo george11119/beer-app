@@ -8,8 +8,7 @@ class MembershipsController < ApplicationController
   end
 
   # GET /memberships/1 or /memberships/1.json
-  def show
-  end
+  def show; end
 
   # GET /memberships/new
   def new
@@ -35,8 +34,8 @@ class MembershipsController < ApplicationController
     respond_to do |format|
       if @membership.save
         format.html do
-          redirect_to user_path(current_user),
-                      notice: "successfully joined club"
+          redirect_to beer_club_path(@membership.beer_club_id),
+                      notice: "Welcome to the club, #{current_user.username}"
         end
         format.json { render :show, status: :created, location: @membership }
       else
@@ -73,8 +72,9 @@ class MembershipsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to memberships_url,
-                    notice: "Membership was successfully destroyed."
+        redirect_to user_path(current_user.id),
+                    notice:
+                      "You have left the beer club #{@membership.beer_club}"
       end
       format.json { head :no_content }
     end

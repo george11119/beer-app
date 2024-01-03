@@ -10,6 +10,8 @@ class BeersController < ApplicationController
 
   # GET /beers/1 or /beers/1.json
   def show
+    @rating = Rating.new
+    @rating.beer = @beer
   end
 
   # GET /beers/new
@@ -18,8 +20,7 @@ class BeersController < ApplicationController
   end
 
   # GET /beers/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /beers or /beers.json
   def create
