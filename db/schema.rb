@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_19_103540) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_04_133700) do
   create_table "beer_clubs", force: :cascade do |t|
     t.string "name"
     t.integer "founded"
@@ -21,10 +21,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_19_103540) do
 
   create_table "beers", force: :cascade do |t|
     t.string "name"
-    t.string "style"
     t.integer "brewery_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "style_id"
+    t.index ["style_id"], name: "index_beers_on_style_id"
   end
 
   create_table "breweries", force: :cascade do |t|
@@ -49,6 +50,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_19_103540) do
     t.integer "user_id"
   end
 
+  create_table "styles", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.datetime "created_at", null: false
@@ -56,4 +64,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_19_103540) do
     t.string "password_digest"
   end
 
+  add_foreign_key "beers", "styles"
 end
